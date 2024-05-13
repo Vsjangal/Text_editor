@@ -111,3 +111,63 @@
 .slide-in {
   animation: slideInFromRight 0.5s ease-out;
 }
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.file-start {
+  display: flex;
+}
+.file-list {
+  margin-bottom: 20px;
+}
+
+.file-list ul {
+  width: 200px;
+  list-style: none;
+  padding: 0;
+}
+
+.file-list li {
+  cursor: pointer;
+  margin-bottom: 5px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.file-list li:hover {
+  background-color: #e0e0e0;
+}
+
+.editor-container {
+  margin-top: 20px;
+}
+
+.editor-container button {
+  margin-right: 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.editor-container button:hover {
+  background-color: #0056b3;
+}
+
+#editor-container .ql-container {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#editor-container .ql-editor {
+  min-height: 200px;
+}
+button {
+  padding: 0;
+}

@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "quill/dist/quill.snow.css";
 import "./styles.css";
 import ReactQuill from "react-quill";
@@ -7,7 +7,22 @@ import axios from "axios";
 // import https from "https-browserify";
 const TextEditor = () => {
   const [content, setContent] = useState("");
-  
+  const [fileList, setFileList] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/get-details")
+      .then((response) => {
+        setFileList(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching file details:", error);
+      });
+  }, []);
+  const handleFileSelect = (file) => {
+    setContent(file.content);
+  };
+
   var modules = {
     toolbar: [
       [{ size: ["small", false, "large", "huge"] }],
@@ -91,37 +106,55 @@ const TextEditor = () => {
   axios.get("http://localhost:3000/get-details").then((data) => {
     console.log(data);
   });
-  
+
   return (
     <div>
-      <h1 style={{ textAlign: "center" }}>Text Editor In React JS</h1>
-      <div style={{ display: "grid", justifyContent: "center" }}>
-      
-        <button onClick={() => {
-          axios
-            .post("http://localhost:3000/save-content", {
-              name: "vijay.txt",
-              content:encodeURIComponent(content),
-            })
-            .then(() => {
-              console.log("file send");
-            });
-        }}>
-          Save
-        </button>
-        <div id="editor-container">
-          <ReactQuill
-            theme="snow"
-            modules={modules}
-            formats={formats}
-            placeholder="write your content ...."
-            onChange={handleProcedureContentChange}
-            value={content}
-            style={{
-              width: "800px",
-              height: "500px",
+      <h2 style={{ textAlign: "center" }}>Text Editor In React JS</h2>
+      <div className="file-start">
+        <div className="file-list">
+          <h3>File List</h3>
+          <ul>
+            {fileList.map((file) => (
+              <li
+                key={file._id}
+                onClick={() => handleFileSelect(file)}
+              >
+                {file.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div
+          style={{ display: "grid", justifyContent: "center", width: "100%" }}
+        >
+          <button
+            onClick={() => {
+              axios
+                .post("http://localhost:3000/save-content", {
+                  name: "vijay.txt",
+                  content: encodeURIComponent(content),
+                })
+                .then(() => {
+                  console.log("file send");
+                });
             }}
-          />
+          >
+            Save
+          </button>
+          <div id="editor-container">
+            <ReactQuill
+              theme="snow"
+              modules={modules}
+              formats={formats}
+              placeholder="write your content ...."
+              onChange={handleProcedureContentChange}
+              value={content}
+              style={{
+                width: "60vw",
+                height: "400px",
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>

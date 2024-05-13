@@ -1,19 +1,16 @@
 const express = require("express");
-const Content = require("./content"); // Assuming this is the file where your Content model is defined
+const Content = require("./content");
 const router = express.Router();
 const fs = require("fs");
 router.get("/get-details", async (req, res) => {
   try {
-    // // Create a new document in the 'app' collection
     // const newContent = await Content.create({
     //   name: "Test Content",
     //   content: "This is a test content.",
     // });
 
-    // Query for the newly created document
     const foundContent = await Content.find();
 
-    // Send the found document as the response
     res.json(foundContent);
   } catch (error) {
     console.error("Error:", error);
@@ -21,8 +18,25 @@ router.get("/get-details", async (req, res) => {
   }
 });
 
+// router.post("/save-content", async (req, res) => {
+//     await Content.create({ name: req.body?.name ,content: decodeURIComponent(req.body?.content) });
+// })
 router.post("/save-content", async (req, res) => {
-    await Content.create({ name: req.body?.name ,content: decodeURIComponent(req.body?.content) });
-})
+  try {
+    const { name, content } = req.body;
+    const existingContent = await Content.findOne({ name });
+    if (existingContent) {
+      existingContent.content = decodeURIComponent(content);
+      await existingContent.save();
+      res.status(200).send("Content updated successfully");
+    } else {
+      await Content.create({ name, content: decodeURIComponent(content) });
+      res.status(201).send("Content created successfully");
+    }
+  } catch (error) {
+    console.error("Error saving content:", error);
+    res.status(500).send("Internal server error");
+  }
+});
 
 module.exports = router;

@@ -8,7 +8,8 @@ import axios from "axios";
 const TextEditor = () => {
   const [content, setContent] = useState("");
   const [fileList, setFileList] = useState([]);
-
+  const [name, setName] = useState("");
+  
   useEffect(() => {
     axios
       .get("http://localhost:3000/get-details")
@@ -18,8 +19,11 @@ const TextEditor = () => {
       .catch((error) => {
         console.error("Error fetching file details:", error);
       });
+    const uniqueFileName = `hello_${Date.now()}.txt`;
+    setName(uniqueFileName);
   }, []);
   const handleFileSelect = (file) => {
+    setName(file.name);
     setContent(file.content);
   };
 
@@ -103,10 +107,6 @@ const TextEditor = () => {
     setContent(content);
   };
 
-  axios.get("http://localhost:3000/get-details").then((data) => {
-    console.log(data);
-  });
-
   return (
     <div>
       <h2 style={{ textAlign: "center" }}>Text Editor In React JS</h2>
@@ -131,7 +131,7 @@ const TextEditor = () => {
             onClick={() => {
               axios
                 .post("http://localhost:3000/save-content", {
-                  name: "vijay.txt",
+                  name: name,
                   content: encodeURIComponent(content),
                 })
                 .then(() => {

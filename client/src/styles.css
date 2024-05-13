@@ -1,0 +1,113 @@
+/* styles.css */
+
+/* Base styles */
+#editor-container {
+  width: 100%;
+  position: relative;
+}
+
+/* Quill editor container */
+.ql-editor {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  min-height: 200px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+  transition: border-color 0.3s ease;
+}
+
+/* Hover effect */
+#editor-container:hover .ql-editor {
+  border-color: #999;
+}
+
+/* Toolbar styles */
+.ql-toolbar {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+}
+
+/* Button styles */
+.ql-toolbar button {
+  padding: 6px 10px;
+  margin-right: 5px;
+  background-color: #f8f8f8;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ql-toolbar button:hover {
+  background-color: #eaeaea;
+}
+
+/* Selected button styles */
+.ql-toolbar button.ql-active {
+  background-color: #ddd;
+}
+
+/* Placeholder text color */
+.ql-editor::placeholder {
+  color: #999;
+}
+
+/* File input styles */
+#file-input {
+  display: none;
+}
+
+#file-label {
+  display: inline-block;
+  padding: 6px 10px;
+  margin-right: 5px;
+  background-color: #f8f8f8;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#file-label:hover {
+  background-color: #eaeaea;
+}
+
+#file-label::before {
+  content: 'Open File';
+}
+
+/* Save button styles */
+#save-button {
+  padding: 6px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#save-button:hover {
+  background-color: #0056b3;
+}
+
+/* Animation */
+@keyframes slideInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.slide-in {
+  animation: slideInFromRight 0.5s ease-out;
+}
